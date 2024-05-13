@@ -53,6 +53,17 @@ nav a {
     line-height: 1.6;
 }
 
+.project {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.project-title {
+    font-size: 20px;
+    color: #333;
+}
+
 footer {
     text-align: center;
     padding: 20px;
