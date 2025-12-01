@@ -4,48 +4,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arin Mukherjee - Personal Website</title>
+    <title>Arin Mukherjee - Home</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <h1>under construction 🤙</h1>
+    <div class="page">
+        <header class="hero">
+            <div class="hero-text">
+                <h1 class="hero-name">Arin Mukherjee</h1>
+                <p class="hero-tagline">
+                    M.Eng student at Princeton University studying diffusion models.
+                </p>
+            </div>
+            <nav class="hero-nav">
+                <a href="projects.html">Projects</a>
+                <a href="blog.html">Blog</a>
+                <a href="yasser.html">Notes</a>
+            </nav>
+        </header>
 
-    <!-- <header>
-        <img src="sabertrick.gif" alt="Arin Mukherjee" width="450">
-        <p>M.Eng Student at Princeton University</p>
-        <nav>
-            <ul>
-                <li><a href="#about">Home</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+        <main>
+            <section class="gif-showcase">
+                <h2 class="section-title">Motion experiments</h2>
+                <p class="section-subtitle">
+                    Drop any number of GIFs into a <code>gifs/</code> folder next to this file. Each one will become a circle in the carousel below; the largest circle shows the GIF currently in focus.
+                </p>
 
-    <div class="container">
-        <section id="about" class="section">
-            <h2 class="title">About me</h2>
-            <p class="content">I'm an M.Eng student at Princeton University.</p>
-        </section>
+                <div class="gif-carousel" id="gifCarousel">
+                    <div class="gif-main">
+                        <!-- This image will be updated by JavaScript -->
+                        <img id="gifMainImage" src="" alt="GIF in focus">
+                    </div>
+                    <div class="gif-thumbs" id="gifThumbs">
+                        <!--
+                            To add more GIFs later, just duplicate one of the buttons below
+                            and point data-src to a new file in the gifs/ folder.
+                        -->
+                        <button class="gif-thumb" data-src="gifs/example-1.gif" aria-label="GIF 1"></button>
+                        <button class="gif-thumb" data-src="gifs/example-2.gif" aria-label="GIF 2"></button>
+                        <button class="gif-thumb" data-src="gifs/example-3.gif" aria-label="GIF 3"></button>
+                    </div>
+                </div>
+            </section>
+        </main>
 
-        <section id="interests" class="section">
-            <h2 class="title">Interests</h2>
-            <p class="content">Mechanical Intelligence, Reinforcement Learning</p>
-        </section>
-
-        <section id="education" class="section">
-            <h2 class="title">Education</h2>
-            <ul class="content">
-                <li>BSE, Computer Science; Certiricate in Applied and Computational Mathematics 2019-2024, Princeton University</li>
-            </ul>
-        </section>
+        <footer class="site-footer">
+            <p>© <span id="year"></span> Arin Mukherjee</p>
+        </footer>
     </div>
 
-    <footer>
-        <p>© Arin Mukherjee</p>
-    </footer> -->
+    <script>
+        (function() {
+            // Footer year
+            var yearSpan = document.getElementById('year');
+            if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+            // GIF carousel logic
+            var thumbsContainer = document.getElementById('gifThumbs');
+            var mainImage = document.getElementById('gifMainImage');
+            if (!thumbsContainer || !mainImage) return;
+
+            var thumbs = Array.prototype.slice.call(thumbsContainer.querySelectorAll('.gif-thumb'));
+            if (thumbs.length === 0) return;
+
+            var currentIndex = 0;
+            var remainingCycles = 2; // show each GIF for two timer cycles before switching
+
+            function setActive(index) {
+                if (!thumbs[index]) return;
+                currentIndex = index;
+
+                thumbs.forEach(function(thumb, i) {
+                    if (i === index) {
+                        thumb.classList.add('active');
+                    } else {
+                        thumb.classList.remove('active');
+                    }
+                });
+
+                var src = thumbs[index].getAttribute('data-src');
+                if (src) {
+                    mainImage.src = src;
+                }
+            }
+
+            thumbs.forEach(function(thumb, index) {
+                thumb.addEventListener('click', function() {
+                    setActive(index);
+                    remainingCycles = 2; // reset when user manually changes GIF
+                });
+            });
+
+            // Initialize with the first GIF
+            setActive(0);
+
+            // Auto-rotate through available GIFs
+            setInterval(function() {
+                if (remainingCycles > 1) {
+                    remainingCycles -= 1;
+                    return; // keep showing the current GIF
+                }
+
+                var nextIndex = (currentIndex + 1) % thumbs.length;
+                setActive(nextIndex);
+                remainingCycles = 2;
+            }, 4000);
+        })();
+    </script>
 </body>
 
 </html>
