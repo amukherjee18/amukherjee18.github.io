@@ -17,33 +17,27 @@
                     M.Eng student at Princeton University studying diffusion models.
                 </p>
             </div>
-            <nav class="hero-nav">
-                <a href="projects.html">Projects</a>
-                <a href="blog.html">Blog</a>
-                <a href="yasser.html">Notes</a>
-            </nav>
         </header>
 
         <main>
             <section class="gif-showcase">
-                <h2 class="section-title">Motion experiments</h2>
-                <p class="section-subtitle">
-                    Drop any number of GIFs into a <code>gifs/</code> folder next to this file. Each one will become a circle in the carousel below; the largest circle shows the GIF currently in focus.
-                </p>
+                <h2 class="section-title">Projects</h2>
 
                 <div class="gif-carousel" id="gifCarousel">
                     <div class="gif-main">
                         <!-- This image will be updated by JavaScript -->
                         <img id="gifMainImage" src="" alt="GIF in focus">
                     </div>
-                    <div class="gif-thumbs" id="gifThumbs">
-                        <!--
-                            To add more GIFs later, just duplicate one of the buttons below
-                            and point data-src to a new file in the gifs/ folder.
-                        -->
-                        <button class="gif-thumb" data-src="gifs/example-1.gif" aria-label="GIF 1"></button>
-                        <button class="gif-thumb" data-src="gifs/example-2.gif" aria-label="GIF 2"></button>
-                        <button class="gif-thumb" data-src="gifs/example-3.gif" aria-label="GIF 3"></button>
+                    <div class="gif-filmstrip" id="gifThumbs">
+                        <button class="gif-frame" data-src="gifs/example-1.gif" aria-label="GIF 1">
+                            <span>Birth-Death Diffusion</span>
+                        </button>
+                        <button class="gif-frame" data-src="gifs/example-2.gif" aria-label="GIF 2">
+                            <span>Neuromechanical Functions</span>
+                        </button>
+                        <button class="gif-frame" data-src="gifs/example-3.gif" aria-label="GIF 3">
+                            <span>Yasse-RL Halaby</span>
+                        </button>
                     </div>
                 </div>
             </section>
@@ -65,7 +59,7 @@
             var mainImage = document.getElementById('gifMainImage');
             if (!thumbsContainer || !mainImage) return;
 
-            var thumbs = Array.prototype.slice.call(thumbsContainer.querySelectorAll('.gif-thumb'));
+            var thumbs = Array.prototype.slice.call(thumbsContainer.querySelectorAll('.gif-frame'));
             if (thumbs.length === 0) return;
 
             var currentIndex = 0;
