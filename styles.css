@@ -79,8 +79,9 @@ main {
 }
 
 .section-title {
-    margin: 0 0 6px;
-    font-size: 1.5rem;
+    margin: 0 0 22px;
+    font-size: 1.7rem;
+    text-align: center;
 }
 
 .section-subtitle {
@@ -92,7 +93,7 @@ main {
 .gif-carousel {
     display: flex;
     flex-wrap: wrap;
-    gap: 24px;
+    gap: 30px;
     justify-content: center;
 }
 
@@ -109,7 +110,11 @@ main {
 .gif-main img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    background-color: #ffffff;
+    image-rendering: auto;
+    padding: 6px;
+    box-sizing: border-box;
 }
 
 .gif-filmstrip {
