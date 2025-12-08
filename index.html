@@ -11,32 +11,74 @@
 <body>
     <div class="page">
         <header class="hero">
-            <div class="hero-text">
-                <h1 class="hero-name">Arin Mukherjee</h1>
-                <p class="hero-tagline">
-                    M.Eng student at Princeton University studying diffusion models.
-                </p>
+            <div class="hero-shell">
+                <div class="hero-media">
+                    <div class="photo-ring">
+                        <img src="images/headshot.jpg" alt="Headshot of Arin Mukherjee">
+                    </div>
+                </div>
+                <div class="hero-text">
+                    <div class="eyebrow">M.Eng @ Princeton · Diffusion Models</div>
+                    <h1 class="hero-name">Arin Mukherjee</h1>
+                    <p class="hero-tagline">
+                        Building ML and RL systems that link diffusion modeling, control, and real-world dynamics. Focused on research that ships and tools that feel polished.
+                    </p>
+                    <div class="hero-meta">
+                        <span>Machine Learning</span>
+                        <span>Reinforcement Learning</span>
+                        <span>Diffusion Models</span>
+                    </div>
+                </div>
             </div>
         </header>
 
         <main>
+            <section class="about">
+                <div class="section-heading">
+                    <h2>About</h2>
+                    <p>Currently at Princeton exploring how diffusion processes can inform control policies and generative modeling for embodied agents.</p>
+                </div>
+                <div class="about-grid">
+                    <p class="about-body">
+                        I’m interested in bridging theory-heavy ML with deployable systems. Recent work includes birth-death diffusion models, neuromechanical simulations, and reinforcement learning for robotics-inspired tasks.
+                    </p>
+                    <ul class="about-facts">
+                        <li>Based in New Jersey</li>
+                        <li>Previously: analytics + product prototyping</li>
+                        <li>Always up for collaborating on ML tooling</li>
+                    </ul>
+                </div>
+            </section>
+
             <section class="gif-showcase">
-                <h2 class="section-title">Projects</h2>
+                <div class="section-heading">
+                    <h2 class="section-title">Projects</h2>
+                    <p class="section-subtitle">Selected experiments and demos</p>
+                </div>
 
                 <div class="gif-carousel" id="gifCarousel">
                     <div class="gif-main">
                         <!-- This image will be updated by JavaScript -->
-                        <img id="gifMainImage" src="" alt="GIF in focus">
+                        <img id="gifMainImage" src="" alt="Project animation">
                     </div>
                     <div class="gif-filmstrip" id="gifThumbs">
                         <button class="gif-frame" data-src="gifs/example-1.gif" aria-label="GIF 1">
-                            <span>Birth-Death Diffusion</span>
+                            <div class="gif-text">
+                                <span class="gif-title">Birth-Death Diffusion</span>
+                                <span class="gif-meta">Generative modeling & population dynamics</span>
+                            </div>
                         </button>
                         <button class="gif-frame" data-src="gifs/example-2.gif" aria-label="GIF 2">
-                            <span>Neuromechanical Functions</span>
+                            <div class="gif-text">
+                                <span class="gif-title">Neuromechanical Functions</span>
+                                <span class="gif-meta">Control policies in biomechanical sims</span>
+                            </div>
                         </button>
                         <button class="gif-frame" data-src="gifs/example-3.gif" aria-label="GIF 3">
-                            <span>Yasse-RL Halaby</span>
+                            <div class="gif-text">
+                                <span class="gif-title">Yasse-RL Halaby</span>
+                                <span class="gif-meta">RL environment with physical constraints</span>
+                            </div>
                         </button>
                     </div>
                 </div>
