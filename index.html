@@ -71,36 +71,50 @@
                 </section>
             </div>
 
-            <section class="gif-showcase">
+            <section class="projects-showcase">
                 <div class="section-heading">
                     <h2 class="section-title">Projects</h2>
                     <p class="section-subtitle">Selected experiments and demos</p>
                 </div>
 
-                <div class="gif-carousel" id="gifCarousel">
-                    <div class="gif-main">
-                        <!-- This image will be updated by JavaScript -->
-                        <img id="gifMainImage" src="" alt="Project animation">
-                    </div>
-                    <div class="gif-filmstrip" id="gifThumbs">
-                        <button class="gif-frame" data-src="gifs/example-1.gif" aria-label="GIF 1">
-                            <div class="gif-text">
-                                <span class="gif-title">Birth-Death Diffusion</span>
-                                <span class="gif-meta">Generative modeling & population dynamics</span>
+                <div class="projects-slideshow">
+                    <div class="projects-track" id="projectsTrack">
+                        <div class="project-block">
+                            <div class="project-gif">
+                                <img src="gifs/example-1.gif" alt="Birth-Death Diffusion">
                             </div>
-                        </button>
-                        <button class="gif-frame" data-src="gifs/example-2.gif" aria-label="GIF 2">
-                            <div class="gif-text">
-                                <span class="gif-title">Neuromechanical Functions</span>
-                                <span class="gif-meta">Control policies in biomechanical sims</span>
+                            <div class="project-info">
+                                <h3 class="project-title">Birth-Death Diffusion</h3>
+                                <p class="project-description">Generative modeling & population dynamics</p>
                             </div>
-                        </button>
-                        <button class="gif-frame" data-src="gifs/example-3.gif" aria-label="GIF 3">
-                            <div class="gif-text">
-                                <span class="gif-title">Yasse-RL Halaby</span>
-                                <span class="gif-meta">RL environment with physical constraints</span>
+                        </div>
+                        <div class="project-block">
+                            <div class="project-gif">
+                                <img src="gifs/example-2.gif" alt="Neuromechanical Functions">
                             </div>
-                        </button>
+                            <div class="project-info">
+                                <h3 class="project-title">Neuromechanical Functions</h3>
+                                <p class="project-description">Control policies in biomechanical sims</p>
+                            </div>
+                        </div>
+                        <div class="project-block">
+                            <div class="project-gif">
+                                <img src="images/illusions.jpg" alt="Visuo-Haptic Illusions in VR">
+                            </div>
+                            <div class="project-info">
+                                <h3 class="project-title">Visuo-Haptic Illusions in VR</h3>
+                                <p class="project-description">Placeholder description</p>
+                            </div>
+                        </div>
+                        <div class="project-block">
+                            <div class="project-gif">
+                                <img src="gifs/example-3.gif" alt="Yasse-RL Halaby">
+                            </div>
+                            <div class="project-info">
+                                <h3 class="project-title">Yasse-RL Halaby</h3>
+                                <p class="project-description">RL environment with physical constraints</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -117,56 +131,76 @@
             var yearSpan = document.getElementById('year');
             if (yearSpan) yearSpan.textContent = new Date().getFullYear();
 
-            // GIF carousel logic
-            var thumbsContainer = document.getElementById('gifThumbs');
-            var mainImage = document.getElementById('gifMainImage');
-            if (!thumbsContainer || !mainImage) return;
+            // Projects slideshow
+            var projectsTrack = document.getElementById('projectsTrack');
+            if (!projectsTrack) return;
 
-            var thumbs = Array.prototype.slice.call(thumbsContainer.querySelectorAll('.gif-frame'));
-            if (thumbs.length === 0) return;
+            var projects = Array.prototype.slice.call(projectsTrack.querySelectorAll('.project-block'));
+            if (projects.length === 0) return;
+
+            var visibleBlocks = 3;
+            var totalProjects = projects.length;
+            
+            // Clone the first block and append to the end for seamless looping
+            var firstBlockClone = projects[0].cloneNode(true);
+            projectsTrack.appendChild(firstBlockClone);
 
             var currentIndex = 0;
-            var remainingCycles = 2; // show each GIF for two timer cycles before switching
 
-            function setActive(index) {
-                if (!thumbs[index]) return;
-                currentIndex = index;
-
-                thumbs.forEach(function(thumb, i) {
-                    if (i === index) {
-                        thumb.classList.add('active');
-                    } else {
-                        thumb.classList.remove('active');
-                    }
-                });
-
-                var src = thumbs[index].getAttribute('data-src');
-                if (src) {
-                    mainImage.src = src;
+            function getBlockWidth() {
+                if (projects[0].offsetWidth > 0) {
+                    return projects[0].offsetWidth + 24; // width + gap
                 }
+                // Fallback calculation
+                var containerWidth = projectsTrack.parentElement.offsetWidth;
+                return (containerWidth - 48) / 3 + 24; // (container - gaps) / 3 + gap
             }
 
-            thumbs.forEach(function(thumb, index) {
-                thumb.addEventListener('click', function() {
-                    setActive(index);
-                    remainingCycles = 2; // reset when user manually changes GIF
-                });
-            });
-
-            // Initialize with the first GIF
-            setActive(0);
-
-            // Auto-rotate through available GIFs
-            setInterval(function() {
-                if (remainingCycles > 1) {
-                    remainingCycles -= 1;
-                    return; // keep showing the current GIF
+            function updateSlideshow(disableTransition) {
+                var blockWidth = getBlockWidth();
+                var offset = -currentIndex * blockWidth;
+                
+                if (disableTransition) {
+                    projectsTrack.style.transition = 'none';
+                } else {
+                    projectsTrack.style.transition = 'transform 0.6s ease-in-out';
                 }
+                
+                projectsTrack.style.transform = 'translateX(' + offset + 'px)';
+            }
 
-                var nextIndex = (currentIndex + 1) % thumbs.length;
-                setActive(nextIndex);
-                remainingCycles = 2;
-            }, 4000);
+            function nextSlide() {
+                currentIndex = currentIndex + 1;
+                
+                // If we've reached the cloned block, instantly reset to beginning
+                if (currentIndex >= totalProjects) {
+                    // Wait for transition to complete, then reset without animation
+                    setTimeout(function() {
+                        projectsTrack.style.transition = 'none';
+                        currentIndex = 0;
+                        projectsTrack.style.transform = 'translateX(0px)';
+                    }, 600);
+                }
+                
+                updateSlideshow();
+            }
+
+            // Initialize after a short delay to ensure layout is complete
+            setTimeout(function() {
+                updateSlideshow(true);
+            }, 100);
+
+            // Auto-advance every 4 seconds
+            setInterval(nextSlide, 4000);
+
+            // Recalculate on window resize
+            var resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    updateSlideshow(true);
+                }, 250);
+            });
         })();
     </script>
 </body>
