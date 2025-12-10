@@ -227,10 +227,18 @@ main {
 .education-details {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
+    flex: 1;
 }
 
-.education-degree {
+.education-degree-type {
+    font-weight: 700;
+    color: var(--accent-strong);
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+}
+
+.education-degree-dept {
     font-weight: 600;
     color: #1f2937;
     line-height: 1.4;
@@ -239,6 +247,7 @@ main {
 .education-school {
     color: var(--muted);
     font-size: 0.95rem;
+    margin-top: 2px;
 }
 
 
