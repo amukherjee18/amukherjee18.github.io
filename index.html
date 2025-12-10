@@ -108,6 +108,15 @@
                         </div>
                         <div class="project-block">
                             <div class="project-gif">
+                                <img src="images/basedist.png" alt="Learnable Base Distributions for Diffusion Models">
+                            </div>
+                            <div class="project-info">
+                                <h3 class="project-title">Learnable Base Distributions for Diffusion Models</h3>
+                                <p class="project-description">Placeholder description</p>
+                            </div>
+                        </div>
+                        <div class="project-block">
+                            <div class="project-gif">
                                 <img src="gifs/example-3.gif" alt="Yasse-RL Halaby">
                             </div>
                             <div class="project-info">
@@ -117,6 +126,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="projects-nav" id="projectsNav"></div>
             </section>
         </main>
 
@@ -133,7 +143,8 @@
 
             // Projects slideshow
             var projectsTrack = document.getElementById('projectsTrack');
-            if (!projectsTrack) return;
+            var projectsNav = document.getElementById('projectsNav');
+            if (!projectsTrack || !projectsNav) return;
 
             var projects = Array.prototype.slice.call(projectsTrack.querySelectorAll('.project-block'));
             if (projects.length === 0) return;
@@ -141,11 +152,43 @@
             var visibleBlocks = 3;
             var totalProjects = projects.length;
             
-            // Clone the first block and append to the end for seamless looping
+            // Clone the first two blocks and append to the end for seamless looping
+            // This ensures we can always show 3 blocks when at the last position
             var firstBlockClone = projects[0].cloneNode(true);
+            var secondBlockClone = projects[1].cloneNode(true);
             projectsTrack.appendChild(firstBlockClone);
+            projectsTrack.appendChild(secondBlockClone);
 
             var currentIndex = 0;
+            var autoSlideInterval;
+
+            // Create navigation dots
+            for (var i = 0; i < totalProjects; i++) {
+                var dot = document.createElement('button');
+                dot.className = 'nav-dot';
+                dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+                dot.setAttribute('data-index', i);
+                if (i === 0) {
+                    dot.classList.add('active');
+                }
+                dot.addEventListener('click', function() {
+                    var targetIndex = parseInt(this.getAttribute('data-index'));
+                    goToSlide(targetIndex);
+                });
+                projectsNav.appendChild(dot);
+            }
+
+            var navDots = Array.prototype.slice.call(projectsNav.querySelectorAll('.nav-dot'));
+
+            function updateNavDots() {
+                navDots.forEach(function(dot, index) {
+                    if (index === currentIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
 
             function getBlockWidth() {
                 if (projects[0].offsetWidth > 0) {
@@ -167,6 +210,16 @@
                 }
                 
                 projectsTrack.style.transform = 'translateX(' + offset + 'px)';
+                updateNavDots();
+            }
+
+            function goToSlide(index) {
+                currentIndex = index;
+                updateSlideshow();
+                
+                // Reset auto-slide timer
+                clearInterval(autoSlideInterval);
+                autoSlideInterval = setInterval(nextSlide, 8000);
             }
 
             function nextSlide() {
@@ -179,6 +232,7 @@
                         projectsTrack.style.transition = 'none';
                         currentIndex = 0;
                         projectsTrack.style.transform = 'translateX(0px)';
+                        updateNavDots();
                     }, 600);
                 }
                 
@@ -190,8 +244,8 @@
                 updateSlideshow(true);
             }, 100);
 
-            // Auto-advance every 4 seconds
-            setInterval(nextSlide, 4000);
+            // Auto-advance every 8 seconds (2x the original 4 seconds)
+            autoSlideInterval = setInterval(nextSlide, 8000);
 
             // Recalculate on window resize
             var resizeTimer;

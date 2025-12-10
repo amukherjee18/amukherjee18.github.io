@@ -292,6 +292,37 @@ main {
     will-change: transform;
 }
 
+.projects-nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 8px 0;
+}
+
+.nav-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(242, 140, 40, 0.3);
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.nav-dot:hover {
+    background: rgba(242, 140, 40, 0.5);
+    transform: scale(1.2);
+}
+
+.nav-dot.active {
+    background: var(--accent);
+    width: 24px;
+    border-radius: 5px;
+}
+
 .project-block {
     display: flex;
     flex-direction: column;
