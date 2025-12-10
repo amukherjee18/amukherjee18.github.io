@@ -41,7 +41,8 @@
                     </div>
                     <div class="about-grid">
                         <p class="about-body">
-                            I'm a researcher at Princeton University working on machine learning for scientific discovery. I work with Prof. Ryan Adams at the Laboratory for Intelligent Probabilistic Systems (LIPS) on diffusion models that can dynamically adapt a sample's cardinality during generation, and with Prof. Sarah-Jane Leslie on understanding the internal representation spaces in language models from an information-theoretic perspective.
+                            I'm a researcher at Princeton University working on machine learning for scientific discovery. I work with Prof. Ryan Adams at the Laboratory for Intelligent Probabilistic Systems (LIPS) on diffusion models that can dynamically adapt a sample's cardinality
+                            during generation, and with Prof. Sarah-Jane Leslie on understanding the internal representation spaces in language models from an information-theoretic perspective.
                         </p>
                     </div>
                 </section>
@@ -54,7 +55,7 @@
                         <div class="education-item">
                             <span class="education-icon">🎓</span>
                             <div class="education-details">
-                                <div class="education-degree-type">B.S.E.</div>
+                                <div class="education-degree-type">Bachelor of Science in Engineering</div>
                                 <div class="education-degree-dept">Computer Science</div>
                                 <div class="education-school">Princeton University</div>
                             </div>
@@ -62,7 +63,7 @@
                         <div class="education-item">
                             <span class="education-icon">🎓</span>
                             <div class="education-details">
-                                <div class="education-degree-type">M.Eng.</div>
+                                <div class="education-degree-type">Master of Engineering</div>
                                 <div class="education-degree-dept">Electrical and Computer Engineering</div>
                                 <div class="education-school">Princeton University</div>
                             </div>
@@ -84,7 +85,7 @@
                             </div>
                             <div class="project-info">
                                 <h3 class="project-title">Birth-Death Diffusion</h3>
-                                <p class="project-description">Generative modeling & population dynamics</p>
+                                <p class="project-description">A diffusion model that handles cardinality changes within the generative process </p>
                             </div>
                         </div>
                         <div class="project-block">
@@ -93,7 +94,7 @@
                             </div>
                             <div class="project-info">
                                 <h3 class="project-title">Neuromechanical Functions</h3>
-                                <p class="project-description">Control policies in biomechanical sims</p>
+                                <p class="project-description">Learning soft material morphologies to translate linear actuations into nonlinear deformations</p>
                             </div>
                         </div>
                         <div class="project-block">
@@ -101,17 +102,17 @@
                                 <img src="images/illusions.jpg" alt="Visuo-Haptic Illusions in VR">
                             </div>
                             <div class="project-info">
-                                <h3 class="project-title">Visuo-Haptic Illusions in VR</h3>
-                                <p class="project-description">Placeholder description</p>
+                                <h3 class="project-title">Visuo-Haptic Illusions</h3>
+                                <p class="project-description">Designing physical proxies to enable haptic interactions in virtual reality </p>
                             </div>
                         </div>
                         <div class="project-block">
                             <div class="project-gif">
-                                <img src="images/basedist.png" alt="Learnable Base Distributions for Diffusion Models">
+                                <img src="images/basedist.png" alt="Learnable Base Distributions">
                             </div>
                             <div class="project-info">
-                                <h3 class="project-title">Learnable Base Distributions for Diffusion Models</h3>
-                                <p class="project-description">Placeholder description</p>
+                                <h3 class="project-title">Learnable Base Distributions</h3>
+                                <p class="project-description">Can we learn base distributions that facilitate training/sampling in diffusion models?</p>
                             </div>
                         </div>
                         <div class="project-block">
@@ -120,7 +121,7 @@
                             </div>
                             <div class="project-info">
                                 <h3 class="project-title">Yasse-RL Halaby</h3>
-                                <p class="project-description">RL environment with physical constraints</p>
+                                <p class="project-description">Squash-playing RL agent training to challenge Yasser El Halaby, Princeton Class of 2006</p>
                             </div>
                         </div>
                     </div>
@@ -150,7 +151,7 @@
 
             var visibleBlocks = 3;
             var totalProjects = projects.length;
-            
+
             // Clone the first two blocks and append to the end for seamless looping
             // This ensures we can always show 3 blocks when at the last position
             var firstBlockClone = projects[0].cloneNode(true);
@@ -201,13 +202,13 @@
             function updateSlideshow(disableTransition) {
                 var blockWidth = getBlockWidth();
                 var offset = -currentIndex * blockWidth;
-                
+
                 if (disableTransition) {
                     projectsTrack.style.transition = 'none';
                 } else {
                     projectsTrack.style.transition = 'transform 0.6s ease-in-out';
                 }
-                
+
                 projectsTrack.style.transform = 'translateX(' + offset + 'px)';
                 updateNavDots();
             }
@@ -215,7 +216,7 @@
             function goToSlide(index) {
                 currentIndex = index;
                 updateSlideshow();
-                
+
                 // Reset auto-slide timer
                 clearInterval(autoSlideInterval);
                 autoSlideInterval = setInterval(nextSlide, 8000);
@@ -223,7 +224,7 @@
 
             function nextSlide() {
                 currentIndex = currentIndex + 1;
-                
+
                 // If we've reached the cloned block, instantly reset to beginning
                 if (currentIndex >= totalProjects) {
                     // Wait for transition to complete, then reset without animation
@@ -234,7 +235,7 @@
                         updateNavDots();
                     }, 600);
                 }
-                
+
                 updateSlideshow();
             }
 
